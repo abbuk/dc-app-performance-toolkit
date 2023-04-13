@@ -119,10 +119,6 @@ class IssueLocators:
     edit_comment_text_field_RTE = (By.XPATH, "//div[textarea[@id='comment']]//iframe")
     edit_comment_text_field = (By.XPATH, "//textarea[@id='comment']")
 
-    # JEditor
-    issue_description_field_jeditor = (By.CSS_SELECTOR, "div.cke[id^=cke_description] iframe")
-    edit_comment_text_field_jeditor = (By.CSS_SELECTOR, "div.cke[id^=cke_comment] iframe")
-    jeditor_editable_field = (By.CLASS_NAME, "cke_editable")
 
 class ProjectLocators:
     project_summary_property_column = (By.CLASS_NAME, 'project-meta-column')
