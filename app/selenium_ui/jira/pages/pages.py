@@ -18,6 +18,7 @@ class PopupManager(BasePage):
 class Login(BasePage):
     page_url = LoginPageLocators.login_url
     page_loaded_selector = LoginPageLocators.system_dashboard
+    base_url = UrlManager().host
 
     def is_first_login(self):
         return True if self.get_elements(LoginPageLocators.continue_button) else False
@@ -107,11 +108,6 @@ class Issue(BasePage):
         self.get_element(IssueLocators.tinymce_description_field).send_keys(text)
         self.return_to_parent_frame()
 
-    def __fill_jeditor_textfield(self, text, selector):
-        self.wait_until_available_to_switch(selector)
-        self.get_element(IssueLocators.jeditor_editable_field).send_keys(text)
-        self.return_to_parent_frame()
-
     def __fill_textfield(self, text, selector):
         self.get_element(selector).send_keys(text)
 
@@ -125,10 +121,6 @@ class Issue(BasePage):
         else:
             self.__fill_textfield(text_description, selector=IssueLocators.issue_description_field)
 
-    def fill_description_edit_jeditor(self):
-        text_description = f"<p>Edit description form selenium - {self.generate_random_string(30)}</p>"
-        self.__fill_jeditor_textfield(text_description, selector=IssueLocators.issue_description_field_jeditor)
-
     def open_create_issue_modal(self):
         self.wait_until_clickable(IssueLocators.create_issue_button).click()
         self.wait_until_visible(IssueLocators.issue_modal)
@@ -139,10 +131,6 @@ class Issue(BasePage):
             self.__fill_rich_editor_textfield(text_description, selector=IssueLocators.issue_description_field_RTE)
         else:
             self.__fill_textfield(text_description, selector=IssueLocators.issue_description_field)
-
-    def fill_description_create_jeditor(self):
-        text_description = f'<p>Description: {self.generate_random_string(100)}</p>'
-        self.__fill_jeditor_textfield(text_description, selector=IssueLocators.issue_description_field_jeditor)
 
     def fill_summary_create(self):
         summary = f"Issue created date {time.time()}"
@@ -201,10 +189,6 @@ class Issue(BasePage):
             self.__fill_rich_editor_textfield(text, selector=IssueLocators.edit_comment_text_field_RTE)
         else:
             self.__fill_textfield(text, selector=IssueLocators.edit_comment_text_field)
-
-    def fill_comment_edit_jeditor(self):
-        text = '<p>Comment from selenium</p>'
-        self.__fill_jeditor_textfield(text, selector=IssueLocators.edit_comment_text_field_jeditor)
 
     def edit_comment_submit(self):
         self.get_element(IssueLocators.edit_comment_add_comment_button).click()
